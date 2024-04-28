@@ -7,3 +7,4 @@ PyAutoGUI
 seaborn
 streamlit
 plotly
+nltk
