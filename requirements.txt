@@ -11,3 +11,4 @@ seaborn
 streamlit
 torch
 transformers
+nltk
