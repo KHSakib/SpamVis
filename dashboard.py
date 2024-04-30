@@ -6,15 +6,15 @@ import altair as alt
 import plotly.express as px 
 import plotly.graph_objects as go 
 from plotly.subplots import make_subplots
-import nltk
-from nltk.tokenize import sent_tokenize
+#import nltk
+#from nltk.tokenize import sent_tokenize
 from transformers import BertTokenizer, BertForSequenceClassification
 import torch
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from ml_models import train_knn_model, train_svm_model, train_gradient_boosting_model, train_logistic_regression_model, train_random_forest_model, train_adaboost_model
 
-nltk.download('punkt')
+#nltk.download('punkt')
 
 #Page Config
 st.set_page_config(
