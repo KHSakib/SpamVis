@@ -29,7 +29,7 @@ st.sidebar.title("Offline Data Analysis")
 
 #Datasets
 hotel_df = pd.read_csv("hotel_df.csv")
-restaurant_df = pd.read_csv("restaurant_df.csv")
+#restaurant_df = pd.read_csv("restaurant_df.csv")
 
 #Sidebar
 st.title("SpamVis: Multimodal Visual Interactive System for Spam Review Detection")
