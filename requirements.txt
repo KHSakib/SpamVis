@@ -8,8 +8,8 @@ pipwin
 plotly
 scikit-learn
 seaborn
-streamlit
+streamlit==3.7.16
 torch
 transformers
 nltk
-serpapi
+serpapi==0.1.5
