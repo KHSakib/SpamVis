@@ -8,7 +8,7 @@ pipwin
 plotly
 scikit-learn
 seaborn
-streamlit==3.7.16
+streamlit==3.8
 torch
 transformers
 nltk
