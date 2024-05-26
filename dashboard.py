@@ -13,7 +13,7 @@ from transformers import BertTokenizer, BertForSequenceClassification
 import torch
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
-nltk.download('punkt')
+#nltk.download('punkt')
 
 
 #Page Config
