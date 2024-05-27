@@ -11,6 +11,7 @@ import serpapi
 from nltk.tokenize import sent_tokenize
 from transformers import BertTokenizer, BertForSequenceClassification
 import torch
+import zipfile
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 #nltk.download('punkt')
@@ -27,9 +28,25 @@ alt.themes.enable("dark")
 # Set the title of the sidebar
 st.sidebar.title("Offline Data Analysis")
 
+# Define the path to your zip file
+zip_file_path = "restaurant_df.zip"
+
 #Datasets
 hotel_df = pd.read_csv("hotel_df.csv")
 #restaurant_df = pd.read_csv("restaurant_df.csv")
+
+# Open the zip file
+with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+    # List all files in the zip archive
+    file_list = zip_ref.namelist()
+    print("Files in the zip archive:", file_list)
+    
+    # Assuming there's only one CSV file, or you know the name of the CSV file
+    csv_file_name = "restaurant_df.csv"  # Replace with the actual file name if different
+    
+    # Extract and read the CSV file into a DataFrame
+    with zip_ref.open(csv_file_name) as csv_file:
+        restaurant_df = pd.read_csv(csv_file)
 
 #Sidebar
 st.title("SpamVis: Multimodal Visual Interactive System for Spam Review Detection")
