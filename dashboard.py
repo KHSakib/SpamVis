@@ -31,8 +31,11 @@ st.sidebar.title("Offline Data Analysis")
 # Define the path to your zip file
 zip_file_path = "restaurant_df.zip"
 
+# Define the path to your zip file
+zip_file_path1 = "hotel_df.zip"
+
 #Datasets
-hotel_df = pd.read_csv("hotel_df.csv")
+#hotel_df = pd.read_csv("hotel_df.csv")
 #restaurant_df = pd.read_csv("restaurant_df.csv")
 
 # Open the zip file
@@ -48,9 +51,22 @@ with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
     with zip_ref.open(csv_file_name) as csv_file:
         restaurant_df = pd.read_csv(csv_file)
 
+# Open the zip file for hotel data
+with zipfile.ZipFile(zip_file_path1, 'r') as zip_ref:
+    # List all files in the zip archive
+    file_list = zip_ref.namelist()
+    print("Files in the zip archive:", file_list)
+    
+    # Assuming there's only one CSV file, or you know the name of the CSV file
+    csv_file_name1 = "hotel_df.csv"  # Replace with the actual file name if different
+    
+    # Extract and read the CSV file into a DataFrame
+    with zip_ref.open(csv_file_name1) as csv_file:
+        hotel_df = pd.read_csv(csv_file)
+
 #Sidebar
 st.title("SpamVis: Multimodal Visual Interactive System for Spam Review Detection")
-selected_model = st.sidebar.selectbox("Select model: ", ["BERT","RoBERTa","KNN", "SVM","Decision Tree","Logistics Regression"])
+selected_model = st.sidebar.selectbox("Select model: ", ["BERT","RoBERTa", "SVM","Decision Tree","Logistics Regression"])
 selected_train_dataset = st.sidebar.selectbox("Select train dataset: ",["Restaurant data","Hotel data"])
 
 #Test dataset option
@@ -85,6 +101,32 @@ if st.sidebar.button("Generate Results"):
                     header_text = "Hotel"
 
         elif selected_model == "RoBERTa": 
+                if selected_train_dataset == "Restaurant data": 
+                    df = restaurant_df  #roberta_restaurant
+                    header_text = "Restaurant"
+
+                elif selected_train_dataset == "Hotel data": 
+                    df = hotel_df  #roberta_hotel 
+                    header_text = "Hotel"
+
+        elif selected_model == "SVM": 
+                if selected_train_dataset == "Restaurant data": 
+                    df = restaurant_df  #roberta_restaurant
+                    header_text = "Restaurant"
+
+                elif selected_train_dataset == "Hotel data": 
+                    df = hotel_df  #roberta_hotel 
+                    header_text = "Hotel"
+        elif selected_model == "Decision Tree": 
+                if selected_train_dataset == "Restaurant data": 
+                    df = restaurant_df  #roberta_restaurant
+                    header_text = "Restaurant"
+
+                elif selected_train_dataset == "Hotel data": 
+                    df = hotel_df  #roberta_hotel 
+                    header_text = "Hotel"
+
+        elif selected_model == "Logistics Regression": 
                 if selected_train_dataset == "Restaurant data": 
                     df = restaurant_df  #roberta_restaurant
                     header_text = "Restaurant"
@@ -210,18 +252,37 @@ if st.sidebar.button("Generate Results"):
             # GRAPH 4: Display bar chart to compare results between train and test
             st.header("Model's Training & Testing Results")
             data = {
-                'Model': ['BERT', 'BERT', 'RoBERTa', 'KNN', 'LR'],
-                'Data': ['Hotel data', 'Restaurant data', 'Hotel data', 'Restaurant data', 'Restaurant data'],
-                'Accuracy': [0.85, 0.78, 0.93, 0.92, 0.88],
-                'Recall': [0.87, 0.81, 0.94, 0.75, 0.89],
-                'Precision': [0.84, 0.77, 0.91, 0.72, 0.87],
-                'Auc': [0.90, 0.82, 0.95, 0.76, 0.88]
+                'Model': ['BERT', 'BERT', 'RoBERTa', 'RoBERTa', "SVM", "SVM", "Decision Tree", "Decision Tree", "Logistics Regression", "Logistics Regression"],
+                'Data': ['Hotel data', 'Restaurant data', 'Hotel data', 'Restaurant data',  'Hotel data', 'Restaurant data',  'Hotel data', 'Restaurant data',  'Hotel data', 'Restaurant data'],
+                'Accuracy': [0.85, 0.78, 0.93, 0.92, 0.80, 0.77, 0.88, 0.80, 0.85, 0.81],
+                'Recall': [0.87, 0.81, 0.94, 0.75, 0.88, 0.83, 0.85, 0.78, 0.78, 0.76],
+                'Precision': [0.84, 0.77, 0.91, 0.72, 0.79, 0.74, 0.77, 0.77, 0.80, 0.75],
+                'Auc': [0.90, 0.82, 0.95, 0.76, 0.87, 0.81, 0.89, 0.80, 0.88, 0.87]
             }
             model_results = pd.DataFrame(data)
 
             filtered_train_results = model_results[(model_results['Model'] == 'BERT') & (model_results['Data'] == 'Restaurant data')]
             filtered_test_results = model_results[(model_results['Model'] == 'BERT') & (model_results['Data'] == 'Hotel data')]
             merged_results = pd.concat([filtered_train_results, filtered_test_results])
+
+            filtered_train_results = model_results[(model_results['Model'] == 'RoBERTa') & (model_results['Data'] == 'Restaurant data')]
+            filtered_test_results = model_results[(model_results['Model'] == 'RoBERTa') & (model_results['Data'] == 'Hotel data')]
+            merged_results = pd.concat([filtered_train_results, filtered_test_results])
+
+            filtered_train_results = model_results[(model_results['Model'] == 'SVM') & (model_results['Data'] == 'Restaurant data')]
+            filtered_test_results = model_results[(model_results['Model'] == 'SVM') & (model_results['Data'] == 'Hotel data')]
+            merged_results = pd.concat([filtered_train_results, filtered_test_results])
+
+            filtered_train_results = model_results[(model_results['Model'] == 'Decision Tree') & (model_results['Data'] == 'Restaurant data')]
+            filtered_test_results = model_results[(model_results['Model'] == 'Decision Tree') & (model_results['Data'] == 'Hotel data')]
+            merged_results = pd.concat([filtered_train_results, filtered_test_results])
+
+            filtered_train_results = model_results[(model_results['Model'] == 'Logistics Regression') & (model_results['Data'] == 'Restaurant data')]
+            filtered_test_results = model_results[(model_results['Model'] == 'Logistics Regression') & (model_results['Data'] == 'Hotel data')]
+            merged_results = pd.concat([filtered_train_results, filtered_test_results])
+
+
+
 
             # Define colors
             colors = ['#FFA07A', '#98FB98', '#ADD8E6', '#FFB6C1']
